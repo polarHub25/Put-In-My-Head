@@ -1,6 +1,6 @@
 ### 배열 (Array)
 
-<img src="D:/Put-In-My-Head/Image/array.PNG" width="80%" height="60%" alt="ARRAY"></img>
+![Alt text](D:/Put-In-My-Head/Image/array.PNG)
 - 같은 특성을 갖는 원소들이 순서대로 구성된 집합(선형 자료 구조)
 - 메모리 상에 연속적으로 데이터 저장(순차 리스트)
 - 고정된 크기 (메모리가 낭비 될 수 있음)
@@ -12,7 +12,7 @@
 
 ### 리스트 (List) : 연결 리스트(Linked List)
 
-<img src="D:/Put-In-My-Head/Image/list.PNG" width="80%" height="60%" alt="ARRAY"></img>
+![Alt text](D:/Put-In-My-Head/Image/list.PNG)
 - 연결 리스트 , ArrayList 등 선형 자료 구조를 표현할 때 사용되는 추상 자료형
 - 같은 특성을 갖는 원소들이 순서대로 구성된 집합(선형 자료 구조)
 - 메모리 상에 연속적으로 저장되진 않음(연결 리스트)

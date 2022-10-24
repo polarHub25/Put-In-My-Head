@@ -9,6 +9,8 @@
 - 삽입/삭제 : O(N)의 시간복잡도
 - 조회 : O(1)의 시간복잡도
 
+#### 배열 선언 / 생성 / 초기화 
+![Alt text](https://github.com/polarHub25/Put-In-My-Head/blob/master/Image/배열선언.JPG)
 
 ### 리스트 (List) : 연결 리스트(Linked List)
 

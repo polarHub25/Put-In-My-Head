@@ -9,15 +9,15 @@
 - jvm의 Execution Engine은 인터프리터와 JIT 컴파일러를 사용해 바이트코드를 해석하거나 기계어로 
 변환해 실행
 - jvm은 메모리를 자동으로 관리하며, 필요시 JNI를 통해 네이티브 메서드(c, c++ 등)도 호출
-- 프로그램 실행이 완료되면 jvm은 cg과 리소스 해제를 통해 메모리를 정리하고 종료
+- 프로그램 실행이 완료되면 jvm은 gc과 리소스 해제를 통해 메모리를 정리하고 종료
 
 > jvm 역할 <br>
 
-자바 애플리케이션을 클래스 로더를 통해 읽어 자바 api와 함꼐 실행하는 것
+자바 애플리케이션을 클래스 로더를 통해 읽어 자바 api와 함께 실행하는 것
 
 - Class Loader는 동적 로딩을 통해 필요한 클래스들을 로딩 및 링크하여 Runtime Data Area에 올림
 - Runtine Data Area에 로딩된 바이트 코드는 Execution Engine을 통해 해석 
-- 이 과정에서 Execution Engine에 의해 cg의 작동과 스레드 동기화가 이루어짐.
+- 이 과정에서 Execution Engine에 의해 gc의 작동과 스레드 동기화가 이루어짐.
 
 > jvm 구조 <br>
 
@@ -45,7 +45,7 @@
  * 힙 영역 (Heap Area) <br>
  : 데이터를 저장하기 위해 런타임 시 동적으로 할당하여 사용하는 영역. <br>
  : new 연산자로 생성되는 클래스, 인스턴스 변수, 배열 타입 등 <br>
- : CG 대상
+ : GC 대상
  
  * 스택 영역 (Stack Area) <br>
  : 메소드가 호출될때마다 프레임이 만들어지며, 현재 실행중인 메소드 상태 정보를 저장 <br>
@@ -75,8 +75,6 @@
  - Marking : 루트 객체에서 그래프 순회를 통해 참조되고 있는 모든 객체 추적
  - Sweeping : 마킹 단계에서 unreachable 상태로 표시된 객체들을 heap에서 제거
  - Compacting : 메모리 단편화를 방지하기 위해 남아있는 객체들을 한쪽으로 모아서 연속적인 메모리 블록을 만듬
- 
-https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EA%B0%80%EB%B9%84%EC%A7%80-%EC%BB%AC%EB%A0%89%EC%85%98GC-%EB%8F%99%EC%9E%91-%EC%9B%90%EB%A6%AC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%F0%9F%92%AF-%EC%B4%9D%EC%A0%95%EB%A6%AC
 
 ## 3. 컬렉션 프레임워크에 대해서 설명해주세요.
 > 정의

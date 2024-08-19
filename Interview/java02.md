@@ -147,6 +147,121 @@ ex) InputStream, OutputStream, Reader, Writer, Connection, BufferReader, FileRea
 ## 자바의 동시성 이슈(공유자원 접근)에 대해 설명해주세요.
 - 동시성 이슈는 멀티 스레드 환경에서 여러 스레드가 공유 자원에 동시에 접근할 때 발생하는 문제
 
-> 동시성 이슈 발생 원인 
-- 공유 자원 : 여러 스레드가 동시에 접근하는 변수, 객체, 데이터 구조 등이 공유자원 
+> 동시성 이슈 주요 원인 / 해결 방법
+```java
+// 공유자원, 경쟁조건, 원자성 문제 예시
+public class Counter {
+    private int counter = 0;
+
+    public void increment() {
+        counter++;
+    }
+    public int getCounter() {
+        return counter;
+    }
+}
+public class MyThread extends Thread {
+    private Counter counter;
+
+    public MyThread(Counter counter) {
+        this.counter = counter;
+    }
+    @Override
+    public void run() {
+        for (int i = 0; i < 1000; i++) {
+            counter.increment();
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        Counter counter = new Counter();
+        Thread t1 = new MyThread(counter);
+        Thread t2 = new MyThread(counter);
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println("Final counter value: " + counter.getCounter());
+    }
+}
+```
+- 공유 자원 ( Shared Resource ) <br> 
+ : 여러 스레드가 동일한 변수나 객체를 동시에 읽거나 쓰는 상황. 공유 자원은 변수, 객체, 파일, 데이터베이스 등이 될수있음 <br>
+ : 위 예시에서: Counter 객체의 counter 변수는 힙 영역에 저장되며, t1과 t2 스레드가 동시에 이 변수에 접근하여 값을 변경합니다. 이 변수는 모든 스레드가 공유하는 자원
+
+- 경쟁 조건 ( Race Condition ) <br>
+ : 2개 이상의 스레드가 자원에 접근하는 순서가 결과에 영향을 미치는 상황. 스레드 간의 작업 순서를 예측할 수 없고, 이로 인해 결과 불확실 <br>
+ :  t1과 t2 스레드가 동시에 counter++ 연산을 수행하려고 할 때 경쟁이 발생합니다. 두 스레드가 동일한 값을 읽고 각각 증가시키는 과정에서 순서에 따라 최종 결과가 달라질 수 있음 <br>
+- 경쟁 조건 해결 방법 <br> 
+  : synchronized 키워드를 사용함으로써 한번에 하나의 스레드만 특정 코드 블록이나 메서드에 접근할 수 있도록 보장 <br>
+  : java.util.concurrent.locks.Lock 인터페이스를 구현한 ReentrantLock 사용 <br>
+  : AtomicInteger, AtomicBoolean 등 원자성을 보장하는 클래스 사용하면 내부적으로 CAS(Compare and swap) 알고리즘을 사용해 경쟁 조건 방지 <br>
+  
+- 원자성 문제 ( Atomicity Issue ) <br>
+ : 원자성은 작업이 "분할 불가능"한 단위로 실행되어야 함. 하지만 원자성이 보장되지 않으면, 여러 단계의 작업이 수행되는 도중 다른 스레드가 개입하여 데이터의 일관성 깨질 수 있음 <br>
+ : counter++ 연산은 원자적이지 않기 때문에(단일 작업으로 실행되지 않고), 중간에 다른 스레드가 개입해 값이 잘못될 수 있음 <br>
+- 원자성 문제 해결 방법 <br>
+ : synchronized 키워드를 사용함으로써 한번에 하나의 스레드만 특정 코드 블록이나 메서드에 접근할 수 있도록 보장 <br>
+ : java.util.concurrent.locks.Lock 인터페이스를 구현한 ReentrantLock 사용 <br>
+ : AtomicInteger, AtomicLong, AtomicReference 등 자바의 Atomic 클래스를 사용하면 원자성을 보장하는 연산을 수행할 수 있습니다. 이 클래스들은 내부적으로 원자성을 보장하여 데이터의 일관성을 유지 <br>
+
+- 가시성 문제 ( Visibility ) <br>
+ : 한 스레드에서 변경된 값이 다른 스레드에서 즉시 보이지 않는 경우 발생. CPU캐시나 메모리 구조로 인해 발생하는 문제. <br>
+- 가시성 문제 해결 방법 <br>
+ : volatile 키워드를 사용하면 변수의 가시성을 보장. volatile로 선언된 변수는 모든 스레드가 항상 최신 값을 읽게 해줌 <br>
+ : 다만 volatile 키워드는 가시성 문제는 해결하지만, 원자성은 보장하지않으므로 복잡한 연산에는 적합하지 않음 <br>
+ : synchronized는 연산의 원자성을 보장하면서도 메모리의 가시성을 확보. 즉, synchronized 블록 안에서 변경된 값은 다른 스레드에서도 즉시 반영 <br>
+ : 객체의 불변성을 유지하기 위해 final 키워드를 사용, 객체 생성 후 값이 변경되지 않음을 보장할 수 있어 가시성 문제를 방지 <br>
+ 
+- 교착 상태 ( Deadlock )
+ : 두 개 이상의 스레드가 서로 상대방이 점유한 자원을 기다리면서 무한히 대기 상태에 빠지는 문제  <br>
+- 교착 상태 문제 해결 방법 <br>
+ : 자원 획득 순서를 고정 <br> 
+ : ReentrantLock의 tryLock() 메서드를 사용해, 특정 시간 동안만 Lock을 시도하고, 실패하면 다른 작업을 수행하도록 설계 <br> 
+ : 타임아웃 설정 <br>
+
+## Mutable 객체와 Immutable 객체의 차이점에 대해 설명해주세요.
+> Mutable
+- 객체의 상태를 변경할 수 있는 개체
+- 멀티 스레드 환경에서 상태가 변경될 수 있어 동기화 필요
+- ArrayList, Hashmap, 사용자 정의 클래스 
+> Immutable
+- 객체 생성 후 상태를 변경할 수 없으며, 모든 필드는 초기화 후 불변
+- 멀티 스레드 환경에서 안전 
+- String, Integer, 사용자 정의 불변 클래스
+- 개체 생성 비용 증가 , 메모리 사용량 증가
+
+> 차이점
+- Mutable 객체는 상태를 변경할 수 있지만, Immutable 객체는 한번 설정된 상태를 변경할 수 없다. 또한 Immutable 객체는 동시성 안전성을 제공하지만, 빈번한 변경 작업이 있을 경우 성능이 저하될 수 있음
+
+> Immutable 객체의 상태를 변경하고 싶은 때는 어떻게 해야하나요?
+- Immutable 객체의 상태를 변경할 때는 기존객체를 수정하지 않고, 변경된 값을 반영한 새로운 객체를 생성
+
+## 자바에서 null을 안전하게 다루는 방법에 대해 설명해주세요.
+
+## JDK와 JRE의 차이점을 설명하세요.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

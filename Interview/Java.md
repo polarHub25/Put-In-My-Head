@@ -336,7 +336,7 @@ names.forEach(name -> System.out.println(name)); // 람다 표현식 사용
 ```
 
 - 스트림 API ( Stream API ) 
-: 데이터 처리를 함수형 스타일로 처리할 수 임음. 컬렉션 데이터를 필터링, 매핑, 정렬 등 작업을 수행할 때 유용, 병렬 처리 기능도 제공
+: 데이터 처리를 함수형 스타일로 처리할 수 있음. 컬렉션 데이터를 필터링, 매핑, 정렬 등 작업을 수행할 때 유용, 병렬 처리 기능도 제공
 ``` java 
 List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
 numbers.stream()

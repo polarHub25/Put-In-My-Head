@@ -296,7 +296,7 @@ ex) 오버로딩, 오버라이딩, 업캐스팅, 다운캐스팅, 인터페이�
 - 컴파일러가 강제하지 않으므로 명시적으로 처리 하지 않아도 됨. 개발자가 코드를 잘 작성하면 피할 수 있는 예외
 - RuntimeException 클래스를 상속
 - Null 참조, 배열 인덱스 초과, 잘못된 연산 등에서 발생 
-- NummPointerException, ArrayIndexOutOfBoundsException, IllegalArgumentException.. 
+- NullPointerException, ArrayIndexOutOfBoundsException, IllegalArgumentException.. 
 
 > 예외( Exception )vs 오류 ( Error ) 
 - 예외( Exception )

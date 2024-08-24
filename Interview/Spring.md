@@ -268,31 +268,35 @@ https://github.com/Next-Squad/Interview-Question/issues/48
 - @Bean과 @Component는 모두 Spring에서 Bean을 등록하기 위한 어노테이션이지만, 사용하는 방식과 목적이 다름.
 
 > @Bean
-- 메서드 레벨에서 사용되며, 개발자가 직접 생성한 객체를 Spring 컨테이너에 등록할 때 사용
-- 주로 Java Config 클래스(@Configuration) 내에서 사용
-``` java
-@Configuration
-public class AppConfig {
-    @Bean
-    public UserService userService() {
-        return new UserServiceImpl();
-    }
-}
-```
+- 외부 라이브러리들을 Bean으로 등록하고 싶은 경우 사용
+- 개발자가 생성한 인스턴스를 spring에게 Bean으로 관리해 달라고 요청하는 경우
+- 1개 이상의 @Bean을 제공하는 클래스의 경우 반드시 @Configuration을 명시해 주어야 싱글톤이 보장
+- 매소드 레벨에서 선언
+
 > @Component
-- 클래스 레벨에서 사용되며, Spring이 자동으로 객체를 스캔하여 Bean으로 등록
+- 개발자가 직접 컨트롤이 가능한 class 경우 사용
+- spring이 직접 인스턴스를 생성하여 Bean으로 등록하도록 하는 경우
 - @Component는 @Service, @Repository, @Controller 등으로 확장
+- 클래스 레벨에서 선언
 
 > 차이점
 - @Bean은 수동으로 Bean을 등록할 때 사용되며, 개발자가 Bean의 생성을 완전히 제어
 - @Component는 자동 스캔을 통해 Bean을 등록하며, 개발자는 클래스에 어노테이션만 추가
   
 > @Component와 @Bean의 사용 시점은 언제인가요?
-- @Component는 클래스 수준에서 자동 스캔을 통해 객체를 Bean으로 등록할 때 사용하고, @Bean은 개발자가 특정 메서드를 통해 직접 Bean을 생성하여 등록할 때 사용합니다.
-> @Component 스캔이 이루어지지 않을 때, 이를 해결하는 방법은 무엇인가요?
-- @ComponentScan 어노테이션을 사용해 Bean을 스캔할 패키지를 지정해 줍니다. 기본적으로는 @SpringBootApplication에 포함된 패키지와 그 하위 패키지가 스캔 대상이 됩니다.
+- @Component는 클래스 수준에서 객체를 Bean으로 등록할 때 사용하고, @Bean은 개발자가 특정 메서드를 통해 직접 Bean을 생성하여 등록할 때 사용합니다.
+
 > @Bean을 사용하는 이유는 무엇인가요?
 - @Bean은 복잡한 객체 생성이나 외부 라이브러리 객체를 Spring 컨테이너에 등록해야 할 때 유용합니다. 이를 통해 수동으로 Bean을 설정하고 관리할 수 있습니다.
+
+> @Component, @Bean 스이 이루어지지 않을 때, 이를 해결하는 방법은 무엇인가요?
+1. @Component 스캔이 되지 않을 때
+- 원인 : 주로 스캔 대상 패키지가 @ComponentScan에 포함되지 않았을 경우 
+- 해결 방안 : @ComponentScan을 사용해 대상 패키지를 명시적으로 설정
+<br> 
+2. @Bean 스캔이 되지 않을 때
+- 원인 : @Configuration 클래스가 Spring 컨텍스트에서 인식되지 않거나, 특정 프로파일이 활성화되지 않았기 때문
+- 해결 방안 : @Configuration 클래스를 확인하거나, 프로파일 설정(application.yml, application.properties)을 확인
 
 
 

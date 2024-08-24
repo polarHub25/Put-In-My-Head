@@ -2,7 +2,7 @@
 >  DI ( Dependency Injection ) 
 1. 객체 간의 결합도를 낮추기 위해 의존성을 외부에서 주입하는 방식으로 IoC의 구현 방식 중 하나입니다. 
 2. 동작 원리 
-- 객체 생성 및 의존성 관리 : Spring 컨테이너가 애플리케이션 실행 시 객치(Bean)을 생성하고 관리합니다
+- 객체 생성 및 의존성 관리 : Spring 컨테이너가 애플리케이션 실행 시 객체(Bean)을 생성하고 관리합니다
 - 의존성 주입 : Spring 컨테이너는 생성된 객체들 간의 의존성을 설정 파일, 어노테이션, java config를 기반으로 자동으로 주입합니다
 - 주입 방식 : DI는 생성자 주입, 필드 주입, 세터 주입 3가지 방식 <br>
 -> 생성자 주입 : 객체 생성 시 필요한 의존성을 생성자를 통해 전달. 장점은 불변 객체를 만들수 있고, 테스트에서 Mock 주입이 용이하지만, 단점은 의존성이 많을 경우 생성자가 복잡해질수 있습니다.  <br>
@@ -55,7 +55,7 @@ https://github.com/Next-Squad/Interview-Question/issues/19
  Bean들은 Spring 컨테이너에 의해 생성, 주입, 관리, 소멸되며, 필요한 의존성을 자동으로 주입받아 사용됩니다. Spring 에서 모든 중요한 비즈니스 로직 객체들은 Bean으로 등록되어 IoC 컨테이너에서 관리됩니다. 
 
 ## 스프링 Bean의 생성 과정을 설명해주세요.
-- Bean 등록 : 개발자가 XML 설정 ㅍ파일, Java설정, 어노테이션(@Controller, @Service, @repository, @Component)을 통해 Bean을 정의하고 등록 
+- Bean 등록 : 개발자가 XML 설정 파일, Java설정, 어노테이션(@Controller, @Service, @repository, @Component)을 통해 Bean을 정의하고 등록 
 - Bean 인스턴스화 : IoC가 컨테이너가 애플리케이션 시작 시점에 등록된 Bean을 인스턴스화 합니다. 
 - 의존성 주입 : 인스턴스화된 Bean에 필요한 의존성을 컨테이너가 주입합니다.(DI) 이 과정은 생성자 주입, 세터 주입, 필드 주입으로 이루어집니다. 
 - 초기화 메서드 호출 : Bean이 초기화되며, 만약 설정된 초기화 메서드가 있다면 해당 메서드가 호출됩니다. 
@@ -72,7 +72,7 @@ https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html
 https://code-lab1.tistory.com/186
 
 > 정의
-- Bean Scope는 SPring IoC컨테이너에서 Bean이 생성되고 관리되는 범위
+- Bean Scope는 Spring IoC컨테이너에서 Bean이 생성되고 관리되는 범위
 
 > 종류 
 1. Singleton (싱글톤)
@@ -223,15 +223,15 @@ https://github.com/Next-Squad/Interview-Question/issues/48
 ## Spring에서 CORS 에러를 해결하기 위한 방법을 설명해주세요.
 - CORS(Cross-Origin Resource Sharing) 에러는 클라이언트가 다른 도메인에서 리소스를 요청할 때 발생
   > 해결 방법
-  1. 컨트롤러 레벨에서 설정 : @CrossOrigin 어노테이션을 사용하여 특정 컨트롤러나 메서드에서 CORS 정책을 설정할 수 있습니다.
+  1. @CrossOrigin 어노테이션을 사용하여 특정 컨트롤러나 메서드에서 CORS 정책을 설정
   ``` java
-  @CrossOrigin(origins = "http://example.com")
+  @CrossOrigin(origins = "http://example.com", allowedHeaders = "*", allowCredentials = "true")
   @GetMapping("/api/data")
   public ResponseEntity<String> getData() {
       return ResponseEntity.ok("data");
   }
   ```
-  2. 전역 설정 : WebMvcConfigurer를 구현하여 전역적으로 CORS 설정을 관리할 수 있습니다.
+  2. WebMvcConfigurer를 구현하여 전역적으로 CORS 설정을 관리
   ``` java
   @Configuration
   public class WebConfig implements WebMvcConfigurer {
@@ -244,13 +244,17 @@ https://github.com/Next-Squad/Interview-Question/issues/48
   }
   ```
 
-  3. Spring Security와 함께 사용 : Spring Security 설정에 CORS를 추가하여 보안 설정과 함께 적용합니다.
+  3. Spring Security 설정에 CORS를 추가하여 보안 설정과 함께 적용
   ``` java
   @Configuration
   public class SecurityConfig extends WebSecurityConfigurerAdapter {
       @Override
       protected void configure(HttpSecurity http) throws Exception {
-          http.cors();
+          http.cors()
+         .and()
+         .csrf().disable() // 필요에 따라 CSRF 비활성화
+         .authorizeRequests()
+         .anyRequest().authenticated();
       }
   }
 

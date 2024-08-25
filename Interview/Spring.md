@@ -158,6 +158,7 @@ https://code-lab1.tistory.com/186
 ## Spring Web MVC의 Dispatcher Servlet의 동작 원리에 대해서 간단히 설명해주세요.
 출처 <br> 
 https://github.com/Next-Squad/Interview-Question/issues/48
+https://mangkyu.tistory.com/18
 
 > 정의
 - Spring Web MVC에서 요청을 처리하는 핵심 구성 요소
@@ -166,9 +167,9 @@ https://github.com/Next-Squad/Interview-Question/issues/48
 > 동작 과정
 - 클라이언트 요청: 클라이언트가 웹 요청을 보냅니다.
 - 요청 처리: DispatcherServlet이 요청을 받고, 이를 처리하기 위한 컨트롤러를 찾습니다.
-- 핸들러 매핑: HandlerMapping을 통해 해당 요청에 매핑된 컨트롤러를 검색합니다.
-- 핸들러 어댑터: 컨트롤러에 요청을 전달해 결과를 반환받습니다.
-- 뷰 리졸버: 반환된 데이터를 바탕으로 어떤 뷰를 사용할지 결정합니다.
+- HandlerMapping : HandlerMapping을 통해 해당 요청에 매핑된 컨트롤러를 검색합니다.
+- Handler Adapter : 컨트롤러에 요청을 전달해 결과를 반환받습니다.
+- viewResolver : 반환된 데이터를 바탕으로 어떤 뷰를 사용할지 결정합니다.
 - 뷰 렌더링: 최종적으로 뷰를 렌더링하고 클라이언트에게 응답을 보냅니다.
 
 > DispatcherServlet의 역할은 무엇인가요?

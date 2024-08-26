@@ -165,12 +165,18 @@ https://mangkyu.tistory.com/18
 - 프론트 컨트롤러 패턴을 따르며, 클라이언트로부터의 모든 요청을 받아 적절한 컨트롤러로 전달하고, 응답을 반환
 - 
 > 동작 과정
-- 클라이언트 요청: 클라이언트가 웹 요청을 보냅니다.
-- 요청 처리: DispatcherServlet이 요청을 받고, 이를 처리하기 위한 컨트롤러를 찾습니다.
-- HandlerMapping : HandlerMapping을 통해 해당 요청에 매핑된 컨트롤러를 검색합니다.
-- Handler Adapter : 컨트롤러에 요청을 전달해 결과를 반환받습니다.
-- viewResolver : 반환된 데이터를 바탕으로 어떤 뷰를 사용할지 결정합니다.
-- 뷰 렌더링: 최종적으로 뷰를 렌더링하고 클라이언트에게 응답을 보냅니다.
+1. Client 요청을 DispatcherServlet이 받음
+2. DispatcherServlet은 요청 정보를 통해 요청을 처리할 Controller를 찾음
+3. HandlerMapping에서 요청을 처리할 Controller를 검색
+4. DispatcherServlet은 HandlerAdapter를 통해 검색된 Controller로 요청을 전달
+5. 이후에 Controller는 서비스를 호출하고, 개발자가 작성한 비지니스 로직 진행
+6. 처리된 비지니스 로직의 반환값을 Controller가 반환
+7. HandlerAdapter는 Controller로부터 받은 응답을 DispatcherServlet으로 돌려줌
+   - Controller가 ResponseEntity를 반환하면 HttpEntityMethodProcessor가 MessageConverter를 사용해 응답 객체를 직렬화하고 응답 상태(HttpStatus)를 설정
+  - Controller가 View 이름을 반환하면 ViewResolver를 통해 View를 반환
+8. 서버의 응답을 Client로 반환
+  - 응답이 데이터라면 그대로 반환
+  - 응답이 화면이라면 View의 이름에 맞는 View를 찾아서 ViewResolver가 적절한 화면을 반환
 
 > DispatcherServlet의 역할은 무엇인가요?
 - DispatcherServlet은 Spring MVC에서 모든 HTTP 요청을 받아들이고, 이를 적절한 컨트롤러에 전달해 처리한 뒤 결과를 클라이언트에게 반환하는 프론트 컨트롤러입니다.
@@ -181,10 +187,13 @@ https://mangkyu.tistory.com/18
 > DispatcherServlet이 없는 Spring 애플리케이션이 가능한가요?
 - 네. Spring Web MVC가 아닌 순수한 Spring 애플리케이션에서는 DispatcherServlet이 필요하지 않으며, 대신 다른 방식으로 요청을 처리할 수 있습니다.
 
+> Servlet에 대해서 설명해주세요.
+- 클라이언트의 요청을 처리하고, 그 결과를 반환하는 Servlet 클래스의 구현 규칙을 지킨 자바 웹 프로그래밍 기술
+- 클라이언트의 요청에 대해 동적으로 작동하는 웹 어플리케이션 컴푸넌트
 
 ## 프론트 컨트롤러 패턴이란 무엇인가요?
 > 정의
-- 웹 애플리케이션의 진입 지점을 하나로 통합하는 디자인 패턴입니다. 모든 요청이 하나의 중앙 컨트롤러(프론트 컨트롤러)를 통해 처리되고, 이후 필요한 컨트롤러나 뷰로 요청이 전달됩니다. Spring의 DispatcherServlet이 이 패턴임
+- 웹 애플리케이션의 진입 지점을 하나로 통합하는 디자인 패턴. 모든 요청이 하나의 중앙 컨트롤러(프론트 컨트롤러)를 통해 처리되고, 이후 필요한 컨트롤러나 뷰로 요청이 전달. Spring의 DispatcherServlet이 이 패턴.
 
 > 장점 
 - 중앙 집중화된 요청 처리
@@ -205,14 +214,17 @@ https://mangkyu.tistory.com/18
 - Servlet Filter와 Spring Interceptor는 요청과 응답을 가로채는 데 사용되지만, 서로 다른 레벨에서 동작
   
 > Servlet Filter
-- 동작 위치: 서블릿 컨테이너 레벨에서 동작하며, 서블릿 요청 이전과 이후에 실행됩니다.
-- 기능: 요청과 응답의 전처리/후처리, 인증 및 인가, 로깅, 데이터 압축 등.
-- 적용 범위: 모든 서블릿과 리소스에 적용될 수 있습니다.
+- Dispatcher Servlet에 요청이 전달되기 전/후에 url 패턴에 맞는 모든 요청에 대해 부가작업을 처리할 수 있는 기능을 제공
+- 스프링 밖에서 처리 즉, 스프링 컨테이너가 아닌 톰캣과 같은 웹 컨테이너(서블릿 컨테이너)에 의해 관리
+- 사용 방법 : javax.servlet의 Filter 인터페이스 구현 ( init, doFilter, destroy ) 
+- 용도 : 공통된 보안 및 인증/인가 관련 작업, 모든 요청에 대한 로깅, 이미지/데이터 압축 및 문자열 인코딩, Spring과 분리되어야하는 기능
+- ex) SpringSecurity
 
 > Spring Interceptor
-- 동작 위치: Spring MVC 레벨에서 동작하며, 컨트롤러에 도달하기 전후에 실행됩니다.
-- 기능: 특정 요청의 전처리/후처리, 인증, 데이터 검증 등.
-- 적용 범위: Spring MVC의 핸들러에만 적용됩니다.
+- Spring이 제공하는 기술, Dispatcher Servlet이 컨트롤러를 호출하기 전과 후에 요청과 응답을 참조하거나 가공할 수 있는 기능 제
+- 스프링 컨텍스트에서 동작
+- 사용 방법 :  org.springframework.web.servlet의 HandlerInterceptor 인터페이스를 구현(implements) ( preHandle, postHandle, afterCompletion )
+- 용도 : 세부적인 보안 및 인증/인가 공통 작업, API 호출에 대한 로깅, Controller로 넘겨주는 정보의 가공
 
 > Servlet Filter와 Spring Interceptor 중 어느 것을 사용해야 할지 결정하는 기준은 무엇인가요?
 - 전역적인 요청 처리나 리소스 관리가 필요하다면 Servlet Filter를 사용하고, Spring MVC의 컨트롤러 요청 전후 처리라면 Spring Interceptor를 사용합니다.

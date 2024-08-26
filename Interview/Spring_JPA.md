@@ -346,6 +346,8 @@ https://mangkyu.tistory.com/18
 
 ## Spring WEB MVC의 근간에는 Java Servlet 이 있는데요. Spring 은 Servlet을 어떻게 구성해서 이를 구현했을까요?
 
+https://steady-coding.tistory.com/599
+
 ## Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
 
 ## Spring Application을 구동할 때 메서드를 실행시키는 방법에 대해 설명해주세요.

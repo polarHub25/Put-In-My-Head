@@ -34,7 +34,7 @@
 - Document Database, Graph Database, Key-Value Database, Wide Column Database 등 다양한 데이터 모델 지원
 - 스키마가 없어서 데이터 구조가 자주 변경되거나 다양한 형태의 데이터 저장 가능
 - BASE 속성을 통해 일관성을 약하지만 가용성을 높임
-- 성 향상은 Scale out
+- 성능 향상은 Scale out
 
 > 차이점
 - RDBMS는 관계형 데이터베이스 관리 시스템으로, 데이터가 고정된 스키마를 가진 테이블 형태로 저장. 데이터 간의 관계를 명확하게 정의하고, SQL을 통해 데이터를 관리. 주로 ACID 속성을 준수하여 트랜잭션의 일관성과 무결성을 보장
@@ -48,21 +48,21 @@
 - RDBMS의 수직확장은 서버의 하드웨어 성능을 향상시켜 처리 능력을 높이는 방법. 데이터의 일관성을 유지하면서 성능을 개선할 수 있지만, 하드웨어 업그레이드 비용이 높고 확장성이 제한적
 - NoSQL의 수평 확장은 여러 서버를 추가하여 데이터와 트래픽을 분산 처리하는 방식. 확장성이 뛰어나 대규모 데이터를 처리하는데 적합하지만, 데이터 일관성을 유지하기 어려울 수 있고, 복잡한 분산 처리 로직을 구현해야함
 
-> BASE 속성
-- Basically Available: 데이터에 항상 접근 가능한 특성(주 서버가 죽더라도 백업 서버 동작)
-- Soft state: 저장소는 일관성이 있을 필요가 없으며 서로 다른 복제본이 항상 상호 일관성이 있을 필요도 없다
-- Eventually consistent: 저장소는 나중에 어떤 시점에서 일관성을 나타낸다. BASE 속성은 ACID가 보장하는것보다 느슨하지만, 일관성 모델 간에 직접적인 일대일 매핑이 없다
+> BASE 속성 ( 기본적으로 가용성을 유지하며 데이터가 결국 일관적이게 되는 상태 ) 
+- Basically Available: 시스템에 장애가 발생하더라도 항상 작동해야한다. 
+- Soft state: 데이터가 반드시 항상 일관성을 유지할 필요는 없다 
+- Eventually consistent: 결국 데이터는 결국 일관성을 유지하게 된다.
   
 
 ## SQL이란 무엇이며, SQL의 종류에는 무엇이 있나요?
 > 정의
-- SQL(Structured Query Language)은 관계형 데이터베이스에서 데이터를 관리하고 조작하기 위해 사용하는 표준 프로그래밍 언어입니다. SQL의 주요 기능은 데이터 조회(SELECT), 삽입(INSERT), 갱신(UPDATE), 삭제(DELETE) 등이 있으며, DDL(Data Definition Language), DML(Data Manipulation Language), DCL(Data Control Language) 및 TCL(Transaction Control Language)로 나뉩니다.
+- SQL(Structured Query Language)은 관계형 데이터베이스에서 데이터를 관리하고 조작하기 위해 사용하는 표준 프로그래밍 언어입니다. SQL의 주요 기능은 데이터 조회(SELECT), 삽입(INSERT), 갱신(UPDATE), 삭제(DELETE) 등이 있으며, DDL(Data Definition Language), DML(Data Manipulation Language), DCL(Data Control Language) 
 
-> DDL이란 무엇인가요?
+> DDL
 - DDL(Data Definition Language)은 데이터베이스 구조를 정의하는 SQL 명령어 집합으로, CREATE, ALTER, DROP 등이 있습니다.
-> DML이란 무엇인가요?
+> DML
 - DML(Data Manipulation Language)은 데이터베이스에 저장된 데이터를 조작하는 SQL 명령어로, SELECT, INSERT, UPDATE, DELETE 등이 있습니다.
-> DCL이란 무엇인가요?
+> DCL
 - DCL(Data Control Language)은 데이터베이스 사용 권한을 제어하는 SQL 명령어로, GRANT와 REVOKE가 있습니다.
 
 
@@ -72,16 +72,21 @@
 
 > 종류
 1. 외부 스키마(External Schema, 서브 스키마, 사용자 뷰)
-  - 사용자나 프로그래머가 각 개인의 입장에서 필요로 하는 데이터베이스의 논리적 구조를 정의한 것
-  - 하나의 데이터베이스 시스템에는 여러개의 외부 스키마가 존재할 수 있고, 하나의 외부 스키마를 여러 사용자가 공용할 수 있음
-  - 일반 사용자는 SQL을 이용하여 DB 사용 , 프로그래머는 c, java등의 언어를 사용하여 DB 접근
+  - 사용자들이 사용할 데이터들을 보여주는 것이므로 추상화가 되어있고, 여러 사용자가 바라보는 관점에 따라 여러 스키마가 존재할 수 있음 
+  - 사용자는 데이터베이스에서 데이터를 사용하는 사람이므로 응용 프로그래머로 볼수있음
+  - 사용자는 어떤 데이터가 필요한지 결정하므로 쿼리를 이용해서 데이터 조작 가능
+  - 응용 프로그래머는 외부 스키마를 통해 구조를 확인하고, DML을 사용해서 데이터를 이용 
+
 2. 개념 스키마(Conceptual Schema, 전체적인 뷰)
   - 데이터베이스의 전체적인 논리적 구조
-  - 개체간의 관계와 제약 조건을 나타내고, 데이터베이스의 접근 권한, 보안 및 무결성 규칙에 관한 명세를 정의
+  - 데이터베이스의 구조, 구체적으로 어떤 데이터가 있고, 각 테이블간의 관계 정의
   - 데이터베이스 관리자(DBA)에 의해서 구성
+  - DDL, DCL를 사용하여 구조를 설계
+    
 3. 내부 스키마(Internal SCheam, 저장 스키마)
   - 물리적 저장장치의 입장에서 본 데이터베이스 구조
   - 실제로 데이터베이스에 저장될 레코드의 물리적인 구조를 정의
+  - 데이터의 필드 이름, 해당 필드는 몇 바이트이며 인덱스가 있는지 등을 정의
   - 시스템 프로그래머나 설계자가 보는 관점의 스키마
 
 > 내부 스키마에서 인덱스를 설계할 때 고려해야할 사항은?
@@ -169,6 +174,8 @@
 > 정규화와 반정규화의 차이점은 무엇인가요?
 - 정규화는 데이터 중복을 줄이고 데이터 무결성을 유지하는 것이 목적이며, 반정규화는 성능 최적화를 위해 의도적으로 데이터 중복을 허용하는 과정입니다.
 
+- https://datarian.io/blog/database-normalization
+
 ## 역정규화(Denormalization)란 무엇이며, 언제 사용하나요?
 > 정의
 - 역정규화(Denormalization)는 성능 최적화를 위해 의도적으로 정규화된 데이터베이스를 일부 비정규화하는 과정입니다. 이를 통해 데이터 조회 성능을 향상시키고, 복잡한 JOIN 연산을 줄일 수 있습니다. 주로 읽기 성능을 중시하는 시스템에서 사용됩니다.
@@ -195,7 +202,7 @@
 
 
 ## GROUP BY와 HAVING의 차이점은 무엇인가요?
-- GROUP BY는 결과 집합을 그룹화하는 데 사용되며, HAVING은 그룹화된 결과에 조건을 적용하는 데 사용됩니다. WHERE는 개별 행에 조건을 적용하지만, HAVING은 그룹화된 결과에만 조건을 적용할 수 있습니다.
+- GROUP BY는 결과 집합을 그룹화하는 데 사용되며, HAVING은 그룹화된 결과에 조건을 적용하는 데 사용됩니다.
 
 > GROUP BY에서 COUNT와 함께 사용하는 예는 무엇인가요?
 - SELECT column_name, COUNT(*) FROM table_name GROUP BY column_name;
@@ -209,8 +216,6 @@
 - 집계 함수(예: COUNT, SUM, AVG 등)는 WHERE 절에서 사용할 수 없고, HAVING 절에서 사용해야 합니다.
 > HAVING을 WHERE 대신 사용하는 경우는 언제인가요?
 - 집계된 데이터에 조건을 적용할 때 HAVING을 사용합니다.
-> WHERE 절에서 LIKE 연산자를 사용하는 예를 보여주세요.
-- SELECT * FROM table_name WHERE column_name LIKE 'A%';
 
 ## DISTINCT 키워드는 무엇을 하는가요?
 - DISTINCT 키워드는 SELECT 문에서 사용하여 중복된 값을 제거하고 고유한 값을 반환합니다. 이를 통해 쿼리 결과에서 중복된 행을 제외하고 고유한 결과를 얻을 수 있습니다.

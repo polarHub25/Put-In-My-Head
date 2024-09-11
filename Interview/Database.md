@@ -859,6 +859,29 @@ https://engineerinsight.tistory.com/336#%E2%9C%94%EF%B8%8F%C2%A0B-Tree%20vs%20B%
 # 트랜잭션 및 동시성 제어
 
 ## 트랜잭션의 고립 수준(Isolation Level)에 대해 설명해주세요.
+https://velog.io/@yujiniii/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EA%B2%A9%EB%A6%AC-%EC%88%98%EC%A4%80
+
+
+https://tlatmsrud.tistory.com/118
+
+https://hudi.blog/transaction-isolation-level/
+> 정의
+- 여러 트랜잭션이 한번에 처리될때, 특정 트랜잭션이 변경하거나 조회하고 있는 데이터에 대해서 다른 트랙잭션에 대해 조회 허용 여부를 결정하는것
+> 4가지 Isolation level ( 격리 수준이 낮은순 -> 격리 수준이 높은순 ) 
+1. Read UnCommitted
+- 각 트랜잭션에서의 변경 내용이 commit, rollback 여부에 상관없이 다른 트랜잭션에서 값을 읽을 수 있음
+- 정합성에 문제가 많은 격리 수준이므로 권장하지 않음
+- Dirty Read 발생 : 트랜잭션 작업이 완료되지 않았는데도 다른 트랜잭션에서 볼 수 있게 되는 현상
+2. Read Committed
+- commit 된 데이터만 읽음
+- RDB에서 대부분 기본적으로 사용되고 있는 격리 수준
+- Dirty Read 같은 현상은 발생하지 않지만, Non-Repeatable read 발생
+- Non-Repeatable read : 하나의 트랜잭션 내에서 동일한 select 쿼리 실행했을때, 항상 같은 결과를 보장해야하는 Repeatable read 정합성에 어긋나는것
+3. Repeatable read
+- 자신의 트랜잭션이 생성되지 이전의 트랜잭션에서 commit 된 데이터만 읽음
+- MySQL, MariaDB 에서 기본으로 사용하는 격리 수준
+- 
+
 
 ## Dirty Read, Non-repeatable Read, Phantom Read에 대해 설명해주세요.
 

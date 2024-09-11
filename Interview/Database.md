@@ -859,14 +859,23 @@ https://engineerinsight.tistory.com/336#%E2%9C%94%EF%B8%8F%C2%A0B-Tree%20vs%20B%
 # 트랜잭션 및 동시성 제어
 
 ## 트랜잭션의 고립 수준(Isolation Level)에 대해 설명해주세요.
+
 ## Dirty Read, Non-repeatable Read, Phantom Read에 대해 설명해주세요.
+
 ## 트랜잭션의 전파(Propagation)에 대해 설명해주세요.
+
 ## 낙관적 잠금(Optimistic Locking)과 비관적 잠금(Pessimistic Locking)의 차이점은 무엇인가요?
+
 ## 트랜잭션에서 발생할 수 있는 동시성 문제에는 어떤 것들이 있나요?
+
 ## Deadlock이란 무엇이며, 이를 방지하는 방법은 무엇인가요?
+
 ## 트랜잭션 로그(Transaction Log)란 무엇인가요?
+
 ## 데이터베이스 커밋과 롤백의 차이점은 무엇인가요?
+
 ## 트랜잭션 타임아웃이란 무엇인가요?
+
 ## 분산 트랜잭션이란 무엇이며, 이를 관리하는 방법은 무엇인가요?
 
 

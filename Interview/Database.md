@@ -1079,18 +1079,4 @@ https://tlatmsrud.tistory.com/118
 ## 조회 성능을 높이기 위한 방법에는 무엇이 있나요?
 ## 데이터베이스 성능 모니터링 도구나 기법에 대해 설명해주세요.
 
-# 데이터 모델링
-## 엔터티(Entity)와 애트리뷰트(Attribute)란 무엇인가요?
-## ERD(Entity-Relationship Diagram)란 무엇인가요?
-## 1:1, 1:N, N:M 관계를 설명해주세요.
-## 테이블 간의 관계를 모델링할 때 주의해야 할 점은 무엇인가요?
-## 데이터베이스의 차수(Degree)와 카디널리티(Cardinality)에 대해 설명해주세요.
-## 데이터 무결성이란 무엇이며, 무결성을 유지하는 방법은 무엇인가요?
-## ORM(Object-Relational Mapping)이란 무엇인가요?
-## 데이터베이스의 외래키 제약조건(Cascade Delete, Cascade Update)이란 무엇인가요?
-## NoSQL의 데이터 모델링 전략은 RDBMS와 어떻게 다른가요?
-## 스키마리스(Schema-less) 데이터베이스란 무엇인가요?
-
-
-
 

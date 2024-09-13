@@ -1229,7 +1229,6 @@ https://memories95.tistory.com/178
 > 종류
 - 수평 파티셔닝 (Horizontal Partitioning)
   + 하나의 테이블의 각 행을 다른 테이블에 분산시키는 방식
-  + 데이터의 개수를 기준으로 나누어 파티셔닝
   + 데이터, 인덱스의 개수가 줄어들어 성능 향상
   + 데이터를 찾는 과정이 복잡해짐(Latency 증가)
 - 수직 파티셔닝 (Vertical Partitioning)

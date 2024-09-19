@@ -1360,6 +1360,9 @@ https://inpa.tistory.com/entry/REDIS-%F0%9F%93%9A-%EC%BA%90%EC%8B%9CCache-%EC%84
 
 # 데이터 모델링
 ## 엔터티(Entity)와 애트리뷰트(Attribute)란 무엇인가요?
+> 엔터티(Entity)
+> 애트리뷰트(Attribute) 
+
 ## ERD(Entity-Relationship Diagram)란 무엇인가요?
 ## 1:1, 1:N, N:M 관계를 설명해주세요.
 ## 테이블 간의 관계를 모델링할 때 주의해야 할 점은 무엇인가요?

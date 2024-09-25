@@ -1469,9 +1469,7 @@ https://inpa.tistory.com/entry/REDIS-%F0%9F%93%9A-%EC%BA%90%EC%8B%9CCache-%EC%84
 > Replication
 - 데이터베이스의 데이터를 여러 서버에 복사하여 데이터의 가용성과 안정성을 높이는 것 
 >  종류
-- Primary Replica 복제 : 하나의 Primary 서버가 쓰기 작업을 처리하고, 여러 Replica 서버가 Primary 서버의 데이터를 복제받아 읽기 작업을 처리하는 방식
-  + 읽기 성능이 높은 시스템에서 Primary서버의 부하를 줄이고, 읽기 성능 개선
-  + Primary 서버에 장애 발생시 Replica 서버를 수동으로 업데이트 해야함 
+- 동기 복제 : Primary 서버에서 데이터 변경 작업이 발생할 때 Replica 서버에도 동시에 데이터를 반영하는 방식
 - 비동기 복제 : Primary 서버에서 데이터 변경 발생시 실시간으로 복제되지 않고, 일정 시간 간격으로 Replica 서버에 복제되는 방식
   + 네트워크 부담이 적음
   + Replica 서버에서 최신 데이터를 제공하지 못할 수 있음

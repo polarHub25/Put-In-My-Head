@@ -191,12 +191,12 @@
 ## 기타 정리 사항
 > URI / URL 
 - URI (Uniform Resource Identifier, 자원의 식별자)
-      + 자원이 어디에 있는지 자원 자체를 식별하는 방법
-      + URL 보다 더 포괄적인 개념
-      + URN(urn:doi:10.1000/182) , 메일 주소(mailto:someone@example.com), FTP 등 
+  + 자원이 어디에 있는지 자원 자체를 식별하는 방법
+  + URL 보다 더 포괄적인 개념
+  + URN(urn:doi:10.1000/182) , 메일 주소(mailto:someone@example.com), FTP 등 
 - URL (Uniform Resource Locator, 위치)
-      + 네트워크 상에 자원이 어디 있는지 위치를 알려주기 위한 규약
-      + https://www.google.com:443/search?q=test&hl=ko
+  + 네트워크 상에 자원이 어디 있는지 위치를 알려주기 위한 규약
+  + ex) "https://www.google.com:443/search?q=test&hl=ko"
       + shceme : "https" 프로토콜 사용
       + host : "www.google.com" 도메인명, IP 주소
       + port : "443"  접속 포트, 일반적으로 생략 가능

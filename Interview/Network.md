@@ -27,9 +27,7 @@
   
 > 패킷 교환 방식
 - 데이터를 패킷으로 나누어 전송하고, 각 패킷이 독립적으로 네트워크를 통해 전달되는 방식
-- 
-
-
+  
 > 출처
 -https://mindnet.tistory.com/entry/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EC%89%BD%EA%B2%8C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-22%ED%8E%B8-TCP-3-WayHandshake-4-WayHandshake
 -https://velog.io/@averycode/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-TCPUDP%EC%99%80-3-Way-Handshake4-Way-Handshake

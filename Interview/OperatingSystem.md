@@ -324,6 +324,54 @@ https://inpa.tistory.com/entry/%F0%9F%91%A9%E2%80%8D%F0%9F%92%BB-%ED%94%84%EB%A1
 - 오버헤드를 줄이고 싶은 경우
   + 일반적인 락의 경우 스레드가 락을 얻지 못하면 블로킹 상태로 전환 -> 락이 해제되면 다시 깨어나서 작업 재개 식의 과정에서 컨텍스트 스위칭이 발생하는데 이는 오버헤드를 발생. 이 경우 락이 짧은 시간내에 해제가 될 거같은 경우에는 스핀락으로 오버헤드를 줄일 수 있음
     
+## Readers-Writers, 생산자-소비자 문제와 식사하는 철학자 문제에 대해서 설명해주세요.
+> Readers-Writers
+- Reader : 공유 버퍼의 내용을 읽기만 하는 프로세스
+- Writer : 공유 버퍼에 내용을 갱신하는 프로세스 
+- 하나의 writer가 공유 자원에 접근하고 있을때 다른 reader, writer 프로세스가 동시에 접근할 경우 혼란이 발생 
+- Readers Priority
+  + 여러 reader는 동시에 자원에 접근할 수 있지만, writer는 reader의 자원 사용이 완료될때까지 대기
+  + reader가 많은 경우 시스템 개선
+  + writer가 오래 대기할 경우 writer starvation 문제가 발생할 수 있음
+- Writers Priority
+  + writer가 자원에 접근할 우선권을 가지고, writer가 대기중인 경우 모든 reader는 대기
+  + writer의 대기 시간이 짧아지고, 빠르게 자원에 접근 가능
+  + reader가 오랜 시간 대기하게 되는 reader starvation 문제 발생할 수 있음 
+- Fair Access or No Starvation
+  + reader와 writer가 교대로 자원에 접근할 수 있도록 하는 것
+  + 세마포어, 모니터를 사용해 구현. reader, writer의 요청 순서에 따라서 접근 기회 부여
+  + reader, writer 모두 대기시간이 길지 않을 수 있고, starvation 현상이 발생하지않을수있음
+  + 구현이 복잡, 성능 저하가 있을 수 있음
+- 사용 예시 : db 에서의 드랜잭션 , 파일 시스템 , 캐시 시스템 
+
+> 생산자-소비자 문제
+- 하나의 공유 버퍼를 두고 데이터를 생산하는 생산자와 데이터를 소비하는 소비자 사이에서 발생하는 동기화 문제 
+
+
+> 식사하는 철학자 문제
+
+
+## 조건 변수(condition variable)란 무엇인가요?
+
+# 메모리 관리 (Memory Management)
+
+## 메모리 계층 구조에 대해서 설명해주세요.
+
+## 메모리에서 스택, 힙, 코드, 데이터 영역에 대해서 설명해주세요.
+
+## 가상 메모리(Virtual Memory)란 무엇인가요?
+
+## 페이지 테이블(Page Table)이란 무엇이며, 그 역할을 설명해보세요.
+
+## 페이지 교체 알고리즘(FIFO, LRU, Optimal 등)의 차이점을 설명하세요.
+
+## 페이지 폴트(Page Fault)란 무엇이며, 어떻게 처리되나요?
+
+## TLB(Translation Lookaside Buffer)의 역할은 무엇인가요?
+
+## 스와핑(Swapping)이란 무엇이며, 언제 발생하나요?
+
+## 세그멘테이션(Segmentation)과 페이징(Paging)의 차이점은 무엇인가요?
 
 
 
